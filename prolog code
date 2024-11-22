@@ -1,0 +1,4 @@
+use_module(library(csv)). 
+load_csv_data(File) :- 
+csv_read_file(File, Rows, [functor(student), arity(4)]), 
+maplist(assert, Rows).
