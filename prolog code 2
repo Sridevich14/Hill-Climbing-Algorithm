@@ -1,0 +1,9 @@
+eligible_for_scholarship(Student_ID) :- 
+student(Student_ID, _, Attendance_Percentage, CGPA), 
+Attendance_Percentage >= 75, 
+CGPA >= 9.0. 
+ 
+ 
+permitted_for_exam(Student_ID) :- 
+student(Student_ID, _, Attendance_Percentage, _), 
+Attendance_Percentage >= 75.
