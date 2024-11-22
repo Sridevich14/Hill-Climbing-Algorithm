@@ -1,0 +1,27 @@
+:- use_module(library(http/thread_httpd)). 
+:- use_module(library(http/http_dispatch)). 
+:- use_module(library(http/http_json)). 
+ 
+ 
+% Define the HTTP handler 
+:- http_handler(root(eligibility), eligibility_handler, []). 
+ 
+ 
+% Start the HTTP server 
+start_server(Port) :- 
+http_server(http_dispatch, [port(Port)]). 
+ 
+ 
+% Eligibility API handler 
+eligibility_handler(Request) :- 
+http_read_json_dict(Request, Dict), 
+atom_number(Dict.student_id, Student_ID), 
+check_eligibility(Student_ID, Response), 
+reply_json_dict(Response). 
+ 
+% Check eligibility logic 
+check_eligibility(Student_ID, Response) :- 
+(eligible_for_scholarship(Student_ID) -> Scholarship = "Yes"; Scholarship = "No"), 
+(permitted_for_exam(Student_ID) -> ExamPermission = "Yes"; ExamPermission = "No"), 
+Response = _{student_id: Student_ID, scholarship: Scholarship, exam_permission: 
+ExamPermission}.
