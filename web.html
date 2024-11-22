@@ -1,0 +1,26 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>Eligibility Checker</title> 
+<script> 
+async function checkEligibility() { 
+const studentId = document.getElementById("studentId").value; 
+const response = await fetch("http://localhost:8080/eligibility", { 
+method: "POST", 
+headers: { "Content-Type": "application/json" }, 
+body: JSON.stringify({ student_id: studentId }) 
+}); 
+const result = await response.json(); 
+document.getElementById("result").innerText = 
+`Scholarship: ${result.scholarship}, Exam Permission: ${result.exam_permission}`; 
+} 
+</script> 
+</head> 
+<body> 
+<h1>Student Eligibility Checker</h1> 
+<label for="studentId">Student ID:</label> 
+<input type="text" id="studentId" /> 
+<button onclick="checkEligibility()">Check</button> 
+<p id="result"></p> 
+</body> 
+</html> 
